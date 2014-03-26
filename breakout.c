@@ -76,8 +76,8 @@ int main(void)
     int points = 0;
     
     // initial ball velocities
-    double xvelocity = drand48() + 0.75;
-    double yvelocity = drand48() + 0.75;
+    double xvelocity = drand48() + 1.0;
+    double yvelocity = drand48() + 1.0;
             
     // keep playing until game over
     while (lives > 0 && bricks > 0)
@@ -124,6 +124,17 @@ int main(void)
         
         // linger before moving again
         pause(10);
+        
+        // detect collisons
+        GObject object = detectCollision(window, ball);
+        
+        // if ball bounces off paddle
+        if (object == paddle)
+        {
+            // bounce up
+            yvelocity = -yvelocity;
+        }
+        
     }
 
     // wait for click before exiting
@@ -162,7 +173,7 @@ void initBricks(GWindow window)
 GOval initBall(GWindow window)
 {
     // call newGOval to create ball
-    GOval ball = newGOval(WIDTH / 2 - 5, HEIGHT / 2 - 5, 10, 10);
+    GOval ball = newGOval(WIDTH / 2 - RADIUS, HEIGHT / 2 - RADIUS, 2 * RADIUS, 2 * RADIUS);
     setFilled(ball, true);
     setColor(ball, "Black");
 
