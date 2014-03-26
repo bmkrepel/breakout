@@ -74,7 +74,10 @@ int main(void)
 
     // number of points initially
     int points = 0;
-
+    
+    // horizontal velocity
+    double xvelocity = 2.0;
+            
     // keep playing until game over
     while (lives > 0 && bricks > 0)
     {
@@ -102,10 +105,6 @@ int main(void)
         }
         
         // move ball
-        
-        // horizontal velocity
-        double xvelocity = 2.0;
-        
         move(ball, xvelocity, 0);
         
         // bounce off right edge of window
