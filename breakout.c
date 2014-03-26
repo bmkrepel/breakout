@@ -33,6 +33,11 @@
 // lives
 #define LIVES 3
 
+// width and height and y coordinate of paddle in pixels
+#define PWIDTH 50
+#define PHEIGHT 10
+int pycoord = HEIGHT - 20;
+
 // prototypes
 void initBricks(GWindow window);
 GOval initBall(GWindow window);
@@ -73,7 +78,28 @@ int main(void)
     // keep playing until game over
     while (lives > 0 && bricks > 0)
     {
-        // TODO
+        // TODO paddle follow mouse in horizontal domain
+        
+        // check for mouse event
+        GEvent event = getNextEvent(MOUSE_EVENT);
+        
+        // if mouse moves
+        if (event != NULL)
+        {
+            // if the event was movement
+            if (getEventType(event) == MOUSE_MOVED)
+            {
+                // have paddle follow x coordinate of cursor
+                double center = getWidth(paddle) / 2;
+                double x = getX(event);
+                
+                // have paddle follow x coordinate of cursor if on screen
+                if ((x > center) && (x < WIDTH - center))
+                {
+                    setLocation(paddle, x - center, pycoord);
+                }
+            }
+        }
     }
 
     // wait for click before exiting
@@ -106,8 +132,13 @@ GOval initBall(GWindow window)
  */
 GRect initPaddle(GWindow window)
 {
-    // TODO
-    return NULL;
+    // create rectangular paddle aligned in bottom-middle of window
+    
+    GRect paddle = newGRect((WIDTH / 2) - (PWIDTH / 2), pycoord, PWIDTH, PHEIGHT);
+    setFilled(paddle, true);
+    setColor(paddle, "BLUE");
+    add(window, paddle);
+    return paddle;
 }
 
 /**
