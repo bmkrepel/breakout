@@ -100,6 +100,28 @@ int main(void)
                 }
             }
         }
+        
+        // move ball
+        
+        // horizontal velocity
+        double xvelocity = 2.0;
+        
+        move(ball, xvelocity, 0);
+        
+        // bounce off right edge of window
+        if (getX(ball) + getWidth(ball) >= WIDTH)
+        {
+            xvelocity = -xvelocity;
+        }
+        
+        // bounce off left edge of window
+        else if (getX(ball) <= 0)
+        {
+            xvelocity = -xvelocity;
+        }
+        
+        // linger before moving again
+        pause(10);
     }
 
     // wait for click before exiting
@@ -115,23 +137,20 @@ int main(void)
  */
 void initBricks(GWindow window)
 {
-    // TODO 
-    
+    // determine width of bricks based on width of window and number of columns    
     int BWIDTH = WIDTH / COLS - COLS;
     
     // for each row
     for (int i = 0; i < ROWS; i++)
     {
-        // draw cols GRect to serve as bricks        
+        // draw number of rectangles as cols to serve as bricks        
         for (int j = 0; j < COLS; j++)
         {
             GRect brick = newGRect((COLS / 2 + j * WIDTH / COLS), (20 + i * ROWS * 2), BWIDTH, 5);
             setFilled(brick, true);
             setColor(brick, "YELLOW");
             add(window, brick);
-        
         }
-        
     }    
 }
 
