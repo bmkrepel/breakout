@@ -115,9 +115,8 @@ int main(void)
             xvelocity = -xvelocity;
         }
 
-        // bounce off top & bottom edge of window
-        else if ((getY(ball) <= 0) ||
-                (getY(ball) + getWidth(ball) >= HEIGHT))
+        // bounce off top edge of window
+        else if (getY(ball) <= 0)
         {
             yvelocity = -yvelocity;
         }
@@ -147,6 +146,18 @@ int main(void)
             }
         }
         
+        // if ball hits bottom edge
+        if (getY(ball) + getWidth(ball) >= HEIGHT)
+        {
+            // lose a life
+            lives--;
+            pause(100);
+            
+            // pause game until user clicks mouse
+            waitForClick();
+            // reset ball in center
+            setLocation(ball, WIDTH / 2 - RADIUS, HEIGHT / 2 - RADIUS);
+        }
     }
 
     // wait for click before exiting
