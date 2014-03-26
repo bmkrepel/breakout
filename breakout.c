@@ -176,6 +176,15 @@ void initBricks(GWindow window)
     // determine width of bricks based on width of window and number of columns    
     int BWIDTH = WIDTH / COLS - COLS;
     
+    // color the bricks something fun
+    const int MAX = ROWS;
+    string color[MAX];
+    color[0] = "FF0000";
+    color[1] = "FFFF00";
+    color[2] = "00FF00";
+    color[3] = "00FFFF";
+    color[4] = "0000FF";
+    
     // for each row
     for (int i = 0; i < ROWS; i++)
     {
@@ -184,9 +193,11 @@ void initBricks(GWindow window)
         {
             GRect brick = newGRect((COLS / 2 + j * WIDTH / COLS), (20 + i * ROWS * 2), BWIDTH, 5);
             setFilled(brick, true);
-            setColor(brick, "YELLOW");
+            setColor(brick, color[i]);
             add(window, brick);
+
         }
+        
     }    
 }
 
