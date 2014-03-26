@@ -78,7 +78,7 @@ int main(void)
     // keep playing until game over
     while (lives > 0 && bricks > 0)
     {
-        // TODO paddle follow mouse in horizontal domain
+        // paddle follow mouse in horizontal domain
         
         // check for mouse event
         GEvent event = getNextEvent(MOUSE_EVENT);
@@ -89,11 +89,11 @@ int main(void)
             // if the event was movement
             if (getEventType(event) == MOUSE_MOVED)
             {
-                // have paddle follow x coordinate of cursor
+                // find center of paddle and x coordinate of mouse
                 double center = getWidth(paddle) / 2;
                 double x = getX(event);
                 
-                // have paddle follow x coordinate of cursor if on screen
+                // have paddle center follow x coordinate of cursor if on screen
                 if ((x > center) && (x < WIDTH - center))
                 {
                     setLocation(paddle, x - center, pycoord);
@@ -115,7 +115,24 @@ int main(void)
  */
 void initBricks(GWindow window)
 {
-    // TODO
+    // TODO 
+    
+    int BWIDTH = WIDTH / COLS - COLS;
+    
+    // for each row
+    for (int i = 0; i < ROWS; i++)
+    {
+        // draw cols GRect to serve as bricks        
+        for (int j = 0; j < COLS; j++)
+        {
+            GRect brick = newGRect((COLS / 2 + j * WIDTH / COLS), (20 + i * ROWS * 2), BWIDTH, 5);
+            setFilled(brick, true);
+            setColor(brick, "YELLOW");
+            add(window, brick);
+        
+        }
+        
+    }    
 }
 
 /**
