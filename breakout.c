@@ -77,11 +77,13 @@ int main(void)
     
     // initial ball velocities
     double xvelocity = drand48() + 1.0;
-    double yvelocity = drand48() + 1.0;
+    double yvelocity = 2.0;
             
     // keep playing until game over
     while (lives > 0 && bricks > 0)
     {
+        updateScoreboard(window, label, points);
+        
         // paddle follow mouse in horizontal domain
         
         // check for mouse event
@@ -143,6 +145,10 @@ int main(void)
                 // bounce reverse
                 yvelocity = -yvelocity;
                 removeGWindow(window, object);
+                pause(10);
+                // updateScoreboard(window, label, points);
+                points++;
+                bricks--;
             }
         }
         
@@ -159,7 +165,7 @@ int main(void)
             setLocation(ball, WIDTH / 2 - RADIUS, HEIGHT / 2 - RADIUS);
         }
     }
-
+    
     // wait for click before exiting
     waitForClick();
 
@@ -235,8 +241,16 @@ GRect initPaddle(GWindow window)
  */
 GLabel initScoreboard(GWindow window)
 {
-    // TODO
-    return NULL;
+    // TODO implement scoreboard using GLabel
+    
+    // instantiate scoreboard
+    GLabel label = newGLabel("bricks destroyed");
+    setFont(label, "SansSerif-18");
+    double x = (getWidth(window) - getWidth(label)) / 2;
+    double y = (getHeight(window) - getHeight(label)) / 2;
+    setLocation(label, x, y);    
+    add(window, label);
+    return label;
 }
 
 /**
