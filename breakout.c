@@ -125,14 +125,26 @@ int main(void)
         // linger before moving again
         pause(10);
         
-        // detect collisons
+        // detect collisons and bounce off objects
         GObject object = detectCollision(window, ball);
         
-        // if ball bounces off paddle
-        if (object == paddle)
+        // if object is NULL, return
+        if (object != NULL)
         {
-            // bounce up
-            yvelocity = -yvelocity;
+            // if ball collides with paddle
+            if (object == paddle)
+            {
+                // bounce up
+                yvelocity = -yvelocity;
+            }
+        
+            // if ball collides with brick
+            if (strcmp(getType(object), "GRect") == 0 && object != paddle)
+            {
+                // bounce reverse
+                yvelocity = -yvelocity;
+                removeGWindow(window, object);
+            }
         }
         
     }
