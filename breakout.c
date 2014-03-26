@@ -75,8 +75,9 @@ int main(void)
     // number of points initially
     int points = 0;
     
-    // horizontal velocity
+    // initial ball velocities
     double xvelocity = 2.0;
+    double yvelocity = 2.0;
             
     // keep playing until game over
     while (lives > 0 && bricks > 0)
@@ -105,18 +106,20 @@ int main(void)
         }
         
         // move ball
-        move(ball, xvelocity, 0);
+        move(ball, xvelocity, yvelocity);
         
-        // bounce off right edge of window
-        if (getX(ball) + getWidth(ball) >= WIDTH)
+        // bounce off right and left edge of window
+        if ((getX(ball) + getWidth(ball) >= WIDTH) ||
+            (getX(ball) <= 0))
         {
             xvelocity = -xvelocity;
         }
-        
-        // bounce off left edge of window
-        else if (getX(ball) <= 0)
+
+        // bounce off top & bottom edge of window
+        else if ((getY(ball) <= 0) ||
+                (getY(ball) + getWidth(ball) >= HEIGHT))
         {
-            xvelocity = -xvelocity;
+            yvelocity = -yvelocity;
         }
         
         // linger before moving again
